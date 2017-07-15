@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const moment = require("moment");
 
 const port = process.env.PORT || 3000;
 var app = express();
@@ -18,24 +19,29 @@ app.get("/", function (req, res) { // Serve index page
 });
   
 app.get("/:datestr", function (req, res) { // Handle passed param string
-  var params = req.params;
-    
-  var date;
+  var reqDate = req.params.datestr;
+  var resDate;
+  var response = {
+    unix: {},
+    natural: {}
+  };
 
-  if ( /%20/.test(params) ) {
+  if ( /%20/.test(reqDate) ) {
     // Request is formatted in natural language
-    response = {
-      unix: new Date(),
-      natural: req.params
-    };
+    response.unix = moment(reqDate, "X");
+    response.natural = reqDate;
   } else {
     // Request contains a Unix timestamp
-    response = {
-      unix: req.params,
-      natural: new Date()
-    };
+    response.unix = reqDate;
+    response.natural = moment(reqDate, "MMMM D, YYYY");
   }
-  res.send( JSON.stringify(params) );
+  
+  if (response.unix && response.natural) {
+    res.send( JSON.stringify(response) );
+  } else {
+    // Error occurred
+    res.status("")
+  }
 });
   
 
