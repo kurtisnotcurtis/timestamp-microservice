@@ -36,12 +36,7 @@ app.get("/:datestr", function (req, res) { // Handle passed param string
     response.natural = moment(reqDate, "MMMM D, YYYY");
   }
   
-  if (response.unix && response.natural) {
-    res.send( JSON.stringify(response) );
-  } else {
-    // Error occurred
-    res.status("")
-  }
+  res.json(response);
 });
   
 
