@@ -28,7 +28,7 @@ app.get("/:datestr", function (req, res) { // Handle passed param string
 
   if ( /%20/.test(reqDate) ) {
     // Request is formatted in natural language
-    response.unix = moment(reqDate, "X");
+    response.unix = moment(reqDate, "x");
     response.natural = reqDate;
   } else {
     // Request contains a Unix timestamp
