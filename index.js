@@ -22,8 +22,8 @@ app.get("/:datestr", function (req, res) { // Handle passed param string
   var reqDate = req.params.datestr;
   var resDate;
   var response = {
-    unix: {},
-    natural: {}
+    unix: null,
+    natural: null
   };
   var natural = /\w+\s\d{1,2}\,*\s\d{4}/;
   var unix = /^\d{10}$/;
