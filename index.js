@@ -25,12 +25,14 @@ app.get("/:datestr", function (req, res) { // Handle passed param string
     unix: {},
     natural: {}
   };
-
-  if ( /%20/.test(reqDate) ) {
+  var natural = /\w+\s\d{1,2}\,*\s\d{4}/;
+  var unix = /^\d{10}$/;
+  
+  if ( natural.test(reqDate) ) {
     // Request is formatted in natural language
     response.unix = moment(reqDate, "x");
     response.natural = reqDate;
-  } else {
+  } else if ( unix.test(reqDate) ) {
     // Request contains a Unix timestamp
     response.unix = reqDate;
     response.natural = moment(reqDate, "MMMM D, YYYY");
